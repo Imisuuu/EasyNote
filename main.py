@@ -1,32 +1,11 @@
 import datetime
 from os.path import exists
 import os
-class File:
-    def __init__(self, text="", current_date=datetime.date.today()):
-        self.text = text
-        self.current_date = current_date
-
-    def Create_File(self):
-        file = open(f"./Notes/{self.current_date}", "a")
-        return file
-
-    def Read_File(self):
-        file = open(f"./Notes/{self.current_date}", "r")
-        print(file.read())
-        return file.read()
-
-    def Write_File(self, text):
-        with open(f"./Notes/{self.current_date}", "a") as f:
-            f.write(text + "\n")
-
-    def Clear_File(self):
-        with open(f"./Notes/{self.current_date}", "w") as f:
-            f.write("")
-
+from Module import File
 def Check_If_File_Exists(path):
     return exists(path)
 
-def Primera():
+def If_Exists():
     print("1. Read the file\n2. Edit the file\n3. Clear the file\n4. Open historical note")
     choice = int(input("Choice: "))
     instance = File()
@@ -54,17 +33,17 @@ def Primera():
         print(f"\nToday is {var.current_date}!")
         var.Read_File()
 
-def Segunda():
+def Not_Existing():
     instance = File()
     print(f"\nToday is {instance.current_date}!")
     instance.Create_File()
-    Primera()
+    If_Exists()
 
 def Main():
     if Check_If_File_Exists(f"./{datetime.date.today()}"):
-        Primera()
+        If_Exists()
     else:
-        Segunda()
+        Not_Existing()
 
 def Count(directory):
     # days = []
