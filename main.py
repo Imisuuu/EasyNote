@@ -7,7 +7,11 @@ def Check_If_File_Exists(path):
 
 def If_Exists():
     print("1. Read the file\n2. Edit the file\n3. Clear the file\n4. Open historical note")
-    choice = int(input("Choice: "))
+    choice = 0
+    try:
+        choice = int(input("Choice: "))
+    except:
+        If_Exists()
     instance = File()
 
     if choice == 1:
@@ -20,18 +24,29 @@ def If_Exists():
         instance.Write_File(text)
         instance.Read_File()
 
-    elif choice==3:
+    elif choice == 3:
         instance.Clear_File()
 
-    elif choice==4:
-        history = Count('./Notes/')
-        print("")
-        for i in range(len(history)):
-            print(f"{i}. {history[i]}")
+    elif choice == 4:
+        Get_Historical_Data()
+
+    else:
+        If_Exists()
+
+
+def Get_Historical_Data():
+    history = Count('./Notes/')
+    print("")
+    for i in range(len(history)):
+        print(f"{i}. {history[i]}")
+    try:
         choose = int(input('Choose: '))
         var = File(current_date=history[choose])
         print(f"\nToday is {var.current_date}!")
         var.Read_File()
+        return 0
+    except:
+        Get_Historical_Data()
 
 def Not_Existing():
     instance = File()
@@ -58,7 +73,7 @@ def Count(directory):
             file = f.removeprefix('.').removeprefix('/').removeprefix('Notes/')
             if (file.startswith("20")and f != ""):
                 date.append(file)
-    return date
+    return sorted(date)
 
 
 Main()
