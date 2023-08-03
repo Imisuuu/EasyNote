@@ -2,11 +2,12 @@ from os.path import exists
 from Module import File
 import os
 import datetime
-
+from Editor import Editor
 
 class Functions:
-    def __init__(self, instance=File()):
+    def __init__(self, instance=File(), editor=Editor()):
         self.instance = instance
+        self.editor = editor
 
     def if_exists(self, instance=File()):
         print("1. Read the file\n2. Edit the file\n3. Clear the file\n4. Open historical note")
@@ -18,13 +19,12 @@ class Functions:
 
         if choice == 1:
             print(f"\nToday is {instance.current_date}!\n")
-            instance.Read_File()
+            print(instance.Read_File().read())
 
         elif choice == 2:
-            text = input("Write sum: ")
-            instance = File(text=text)
-            instance.Write_File(text)
-            instance.Read_File()
+            #Zamiana na editor
+            self.editor.edit()
+
 
         elif choice == 3:
             instance.Clear_File()
@@ -59,7 +59,7 @@ class Functions:
             choose = int(input('Choose: '))
             var = File(current_date=history[choose])
             print(f"\nToday is {var.current_date}!")
-            var.Read_File()
+            print(var.Read_File().read())
             return 0
         except:
             self.Get_Historical_Data()
